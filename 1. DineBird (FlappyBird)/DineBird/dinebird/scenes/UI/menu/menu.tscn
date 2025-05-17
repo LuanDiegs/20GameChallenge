@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfhd3i6yfl87f"]
+
+[ext_resource type="Theme" uid="uid://f8q31g3uad2e" path="res://scenes/UI/menu/themes/highscore_label/highscore_label.tres" id="1_klgdb"]
+[ext_resource type="Script" uid="uid://h7vi72f7b0un" path="res://scenes/UI/menu/menu.gd" id="1_mcvr8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u7r3n"]
+
+[node name="Menu" type="CanvasLayer"]
+follow_viewport_enabled = true
+script = ExtResource("1_mcvr8")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = -1
+anchor_top = 0.00208333
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_u7r3n")
+metadata/_edit_use_anchors_ = true
+
+[node name="Container" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.84238
+anchor_right = 1.0
+anchor_bottom = 0.965553
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+theme_override_constants/separation = 20
+metadata/_edit_use_anchors_ = true
+
+[node name="ActualScoreContainer" type="HBoxContainer" parent="Panel/Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_klgdb")
+theme_override_constants/separation = 10
+
+[node name="ActualScore" type="Label" parent="Panel/Container/ActualScoreContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "0"
+
+[node name="MaxPointsContainer" type="HBoxContainer" parent="Panel/Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_klgdb")
+theme_override_constants/separation = 10
+
+[node name="MaxPointsLabel" type="Label" parent="Panel/Container/MaxPointsContainer"]
+layout_mode = 2
+theme = ExtResource("1_klgdb")
+text = "Highscore:"
+
+[node name="MaxPoints" type="Label" parent="Panel/Container/MaxPointsContainer"]
+layout_mode = 2
+text = "0"

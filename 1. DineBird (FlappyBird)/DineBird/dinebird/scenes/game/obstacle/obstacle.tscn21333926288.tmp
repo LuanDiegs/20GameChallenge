@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://csrd01exqp70p"]
+
+[ext_resource type="Script" uid="uid://c61besdmt253i" path="res://scenes/game/obstacle/obstacle.gd" id="1_re4hg"]
+[ext_resource type="PackedScene" uid="uid://beeqe36d1ycbq" path="res://scenes/game/pipe/pipe.tscn" id="1_tf5hy"]
+
+[node name="Obstacle" type="Node2D"]
+script = ExtResource("1_re4hg")
+
+[node name="PipeUp" parent="." instance=ExtResource("1_tf5hy")]
+position = Vector2(0, -260)
+rotation = 3.14159
+
+[node name="PipeDown" parent="." instance=ExtResource("1_tf5hy")]
+position = Vector2(0, 277)

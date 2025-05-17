@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://csrd01exqp70p"]
+
+[ext_resource type="Script" uid="uid://c61besdmt253i" path="res://scenes/game/obstacle/obstacle.gd" id="1_re4hg"]
+[ext_resource type="PackedScene" uid="uid://beeqe36d1ycbq" path="res://scenes/game/pipe/pipe.tscn" id="1_tf5hy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_re4hg"]
+size = Vector2(28, 1156)
+
+[node name="Obstacle" type="Node2D"]
+script = ExtResource("1_re4hg")
+
+[node name="PipeUp" parent="." instance=ExtResource("1_tf5hy")]
+position = Vector2(0, -360)
+rotation = 3.14159
+
+[node name="PipeDown" parent="." instance=ExtResource("1_tf5hy")]
+position = Vector2(0, 360)
+
+[node name="PointArea" type="Area2D" parent="." groups=["Point"]]
+
+[node name="Collision" type="CollisionShape2D" parent="PointArea"]
+shape = SubResource("RectangleShape2D_re4hg")

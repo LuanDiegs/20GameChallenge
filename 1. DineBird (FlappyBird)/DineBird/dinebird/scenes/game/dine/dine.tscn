@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dd5ydwcgkk0dm"]
+
+[ext_resource type="Script" uid="uid://bo22ojw6xo81f" path="res://scenes/game/dine/dine.gd" id="1_7sndd"]
+[ext_resource type="Texture2D" uid="uid://dbob2b2y5s0oy" path="res://assets/dine/dine.png" id="1_mdmxt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iu2q0"]
+size = Vector2(70, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_saifi"]
+
+[node name="Dine" type="CharacterBody2D" groups=["Player"]]
+z_index = 1
+script = ExtResource("1_7sndd")
+
+[node name="Dine" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(5, 5)
+texture = ExtResource("1_mdmxt")
+
+[node name="Area" type="Area2D" parent="." groups=["Player"]]
+
+[node name="Collision" type="CollisionShape2D" parent="Area"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_iu2q0")
+
+[node name="CollisionPlayer" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_saifi")
+disabled = true
+
+[connection signal="area_entered" from="Area" to="." method="_on_area_area_entered"]
+[connection signal="body_entered" from="Area" to="." method="_on_area_body_entered"]
