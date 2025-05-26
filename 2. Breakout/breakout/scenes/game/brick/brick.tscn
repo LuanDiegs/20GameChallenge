@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfb40fvf7l5hw"]
+
+[ext_resource type="Script" uid="uid://dan3344dm1f8r" path="res://scripts/game/brick/brick.gd" id="1_lr1se"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0wfyh"]
+size = Vector2(135, 30)
+
+[node name="Brick" type="StaticBody2D"]
+script = ExtResource("1_lr1se")
+
+[node name="CollisionBrick" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0wfyh")
+debug_color = Color(0.972699, 0.165938, 0, 0.42)
+
+[node name="Area" type="Area2D" parent="."]
+
+[node name="CollisionAreaBrick" type="CollisionShape2D" parent="Area"]
+shape = SubResource("RectangleShape2D_0wfyh")
+debug_color = Color(0.972699, 0.165938, 0, 0.42)
+
+[connection signal="body_entered" from="Area" to="." method="_on_area_body_entered"]
