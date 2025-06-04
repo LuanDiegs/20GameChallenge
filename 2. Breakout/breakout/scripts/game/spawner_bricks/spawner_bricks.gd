@@ -11,13 +11,22 @@ const BRICK := preload("res://scenes/game/brick/brick.tscn")
 @export var BRICK_SPACING_X := 5.0
 @export var BRICK_SPACING_Y := 5.0
 
-@onready var area: Area2D = $Area
-@onready var spawn_area: CollisionShape2D = $Area/SpawnArea
+# Private
+var _bricks_count := 0
 
 
 func _ready() -> void:
+	create_level()
+	
+	
+func create_level():	
 	var screen_size_x := get_viewport().get_visible_rect().size.x
-
+	BRICK_COLUMNS = randi_range(3, 6)
+	BRICK_ROWS = randi_range(3, 6)
+	BRICK_WIDTH = ((screen_size_x - 20) - (BRICK_COLUMNS * BRICK_SPACING_X)) / BRICK_COLUMNS
+	
+	_bricks_count = BRICK_COLUMNS * BRICK_ROWS
+	
 	# Calculate the total width occupied by all bricks (including spacing)
 	var width_all_bricks := (BRICK_WIDTH * BRICK_COLUMNS) + (BRICK_COLUMNS * BRICK_SPACING_X)
 
@@ -28,7 +37,7 @@ func _ready() -> void:
 	var initial_x := ((screen_size_x - width_all_bricks) / 2) + (BRICK_WIDTH / 2) + (BRICK_SPACING_X / 2)
 
 	# Fixed initial Y position
-	var initial_y := 40
+	var initial_y := 80
 
 	# Combined initial spawn position
 	var initial_position_spawn := Vector2(initial_x, initial_y)
@@ -55,7 +64,15 @@ func _ready() -> void:
 			brick.SIZE_WIDTH = BRICK_WIDTH
 			brick.SIZE_HEIGHT = BRICK_HEIGHT
 			last_brick_x = brick.global_position.x
-			add_child(brick)
+			brick.connect("brick_died", _brick_died)
+			call_deferred("add_child", brick)
 			
 		line_offset_y += BRICK_HEIGHT + BRICK_SPACING_Y
-		
+
+
+func _brick_died():
+	_bricks_count -= 1
+	
+	# If theres no bricks left, the level is recreated
+	if(_bricks_count == 0):
+		create_level()

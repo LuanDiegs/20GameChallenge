@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0qwkkgjo3hun"]
+
+[ext_resource type="Script" uid="uid://00lc62oydeus" path="res://scripts/game/paddle/paddle.gd" id="1_3eo7o"]
+[ext_resource type="Script" uid="uid://b07al2rh55hog" path="res://scenes/game/paddle/power_ups_state/power_ups_state.gd" id="2_yaucu"]
+[ext_resource type="Script" uid="uid://dl76i3843n0kj" path="res://scenes/game/paddle/power_ups_state/rotate_state/rotate_state.gd" id="3_nlyyd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i3wh2"]
+size = Vector2(300, 40)
+
+[node name="Paddle" type="CharacterBody2D" groups=["Paddle"]]
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_3eo7o")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Sprite"]
+anchors_preset = -1
+anchor_left = -100.0
+anchor_top = -10.0
+anchor_right = 100.0
+anchor_bottom = 10.0
+offset_left = -50.0
+offset_top = -10.0
+offset_right = 50.0
+offset_bottom = 10.0
+pivot_offset = Vector2(100, 10)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="Colission" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_i3wh2")
+
+[node name="PowerUpsActives" type="Node" parent="."]
+script = ExtResource("2_yaucu")
+
+[node name="Rotate" type="Node" parent="PowerUpsActives" node_paths=PackedStringArray("power_up_state")]
+script = ExtResource("3_nlyyd")
+power_up_state = NodePath("..")
+
+[node name="RotateTimer" type="Timer" parent="PowerUpsActives/Rotate"]
+wait_time = 5.0
+
+[node name="Expand" type="Node" parent="PowerUpsActives"]
+
+[node name="ExpandTimer" type="Timer" parent="PowerUpsActives/Expand"]

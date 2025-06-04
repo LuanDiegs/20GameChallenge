@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxl6pifw0l068"]
+
+[ext_resource type="Script" uid="uid://cd5kl1x5a5ed1" path="res://scripts/game/powerups/powerups.gd" id="1_usd0y"]
+[ext_resource type="Texture2D" uid="uid://bdp7jcn3o3tdi" path="res://assets/game/powerups/rotate.png" id="2_hm4ow"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hm4ow"]
+radius = 20.0
+
+[node name="Powerups" type="Node2D"]
+script = ExtResource("1_usd0y")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_hm4ow")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("2_hm4ow")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

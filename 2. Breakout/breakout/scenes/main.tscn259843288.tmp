@@ -1,23 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://dnauxe1vnflik"]
+[gd_scene load_steps=7 format=3 uid="uid://dnauxe1vnflik"]
 
 [ext_resource type="PackedScene" uid="uid://b0qwkkgjo3hun" path="res://scenes/game/paddle/paddle.tscn" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://csll2ld85qfy6" path="res://scripts/game/game.gd" id="1_sugp2"]
 [ext_resource type="PackedScene" uid="uid://dwyj5kog07tsl" path="res://scenes/game/ball/ball.tscn" id="2_0wfyh"]
 [ext_resource type="Script" uid="uid://cww64l5vsi01c" path="res://scripts/game/spawner_bricks/spawner_bricks.gd" id="2_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://diewmxg7si4pr" path="res://scenes/game/ui/score/score.tscn" id="5_tbgi4"]
-[ext_resource type="Script" uid="uid://crncd7boohkqn" path="res://scripts/game/ui/alerts/alerts.gd" id="6_tefeu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sugp2"]
 size = Vector2(1131, 221.5)
-
-[sub_resource type="FontVariation" id="FontVariation_tbgi4"]
-variation_embolden = 1.2
-variation_transform = Transform2D(1, 0.2, 0, 1, 0, 0)
-spacing_glyph = 15
-
-[sub_resource type="Theme" id="Theme_tefeu"]
-Label/font_sizes/font_size = 36
-Label/fonts/font = SubResource("FontVariation_tbgi4")
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_sugp2")
@@ -57,26 +47,5 @@ mass = 0.001
 [node name="UI" type="Node" parent="."]
 
 [node name="ScoreContainer" parent="UI" instance=ExtResource("5_tbgi4")]
-
-[node name="Alerts" type="VBoxContainer" parent="UI" node_paths=PackedStringArray("alert")]
-visible = false
-anchors_preset = -1
-anchor_top = 0.480469
-anchor_right = 1.0
-anchor_bottom = 0.519531
-offset_top = 50.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(360, 25)
-script = ExtResource("6_tefeu")
-alert = NodePath("Alert")
-metadata/_edit_use_anchors_ = true
-
-[node name="Alert" type="Label" parent="UI/Alerts"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme = SubResource("Theme_tefeu")
-text = "ALERTAAAAAA"
 
 [connection signal="body_entered" from="Limits/DeathArea" to="." method="_on_death_area_body_entered"]

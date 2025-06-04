@@ -59,7 +59,6 @@ mass = 0.001
 [node name="ScoreContainer" parent="UI" instance=ExtResource("5_tbgi4")]
 
 [node name="Alerts" type="VBoxContainer" parent="UI" node_paths=PackedStringArray("alert")]
-visible = false
 anchors_preset = -1
 anchor_top = 0.480469
 anchor_right = 1.0
