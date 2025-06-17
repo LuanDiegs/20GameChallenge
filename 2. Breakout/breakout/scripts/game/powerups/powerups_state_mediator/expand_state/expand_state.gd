@@ -23,6 +23,8 @@ func enter():
 	var paddle = POWERUP_STATE.paddle as Player
 	var size = Vector2(300, 40)
 	paddle.set_size(size)
+	
+	AlertMediatorSingleton.create_alert("Expand paddle!", POWERUP_DURATION)
 
 
 func timeout_powerup():

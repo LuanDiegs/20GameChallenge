@@ -9,8 +9,10 @@ var _score_multiplier: int = 1
 
 func increment_score(points_to_add):
 	_score += points_to_add * _score_multiplier
+	
 	if _score > _highScore:
 		_highScore = _score
+		
 	updated_score.emit()
 
 
@@ -33,5 +35,8 @@ func get_highscore() -> int:
 
 func initialize_highscore():
 	var highscore_saved = SaveSystemSingleton.load_save()
-	if !highscore_saved.is_empty():
-		_highScore = highscore_saved.highScore
+	
+	if highscore_saved.is_empty():
+		return
+		
+	_highScore = highscore_saved.highScore

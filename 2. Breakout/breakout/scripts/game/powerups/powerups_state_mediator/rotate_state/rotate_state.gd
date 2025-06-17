@@ -16,7 +16,7 @@ func enter():
 	# First whe start the timer, set the multiplier to 2x and set the alert of double points
 	rotate_timer.start()
 	ScoreSingleton.change_multiplier(2)
-	AlertMediatorSingleton.create_alert("Double points!")
+	AlertMediatorSingleton.create_alert("Double points!", POWERUP_DURATION)
 	
 	# The rotation will stack, so if the player get a lot of rotate power-ups, when the rotation changes to 0 wlll be VERY fast hehe
 	# The player will get double points but theres a price...
@@ -36,4 +36,3 @@ func timeout_powerup():
 	rotate_timer.stop()
 	POWERUP_STATE.set_current_powerup("none")
 	ScoreSingleton.change_multiplier(1)
-	AlertMediatorSingleton.remove_alert()

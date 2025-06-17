@@ -7,6 +7,15 @@ class_name Brick
 @onready var collision_brick: CollisionShape2D = $CollisionBrick
 @onready var collision_area_brick: CollisionShape2D = $Area/CollisionAreaBrick
 
+@onready var sprite_2d = $Sprite2D
+var actual_image_brick: Dictionary = {}
+var images_bricks_half_life = {
+	6: preload("res://assets/game/brick/brick_half_life_106x50.png"),
+	5: preload("res://assets/game/brick/brick_half_life_130x50.png"),
+	4: preload("res://assets/game/brick/brick_half_life_165x50.png"),
+	3: preload("res://assets/game/brick/brick_half_life_223x50.png"),
+}
+
 var bounces_to_die: int = 1
 
 signal brick_died
@@ -18,6 +27,8 @@ func _ready() -> void:
 	# Set the size of the collisions shapes
 	collision_area_brick.shape.set("size", Vector2(SIZE_WIDTH, SIZE_HEIGHT))
 	collision_brick.shape.set("size", Vector2(SIZE_WIDTH, SIZE_HEIGHT))
+	
+	_set_texture_sprite(actual_image_brick.image)
 
 
 func _on_area_body_entered(body: Node2D) -> void:
@@ -25,7 +36,8 @@ func _on_area_body_entered(body: Node2D) -> void:
 	if(body.is_in_group(GroupsSingleton.BallGroup)):		
 		# Decrease life, if 0 the brick dissapears
 		bounces_to_die -= 1
-		collision_area_brick.debug_color = Color("f82aff6b")
+		_set_texture_sprite(images_bricks_half_life.get(actual_image_brick.key_image))
+		
 		if (bounces_to_die == 0):
 			# Increment score
 			brick_died.emit()
@@ -42,12 +54,23 @@ func _on_area_body_entered(body: Node2D) -> void:
 
 
 func spawn_power_up():
-	# 45% chance to spawn
+	# 30% chance to spawn
 	var probability_to_spawn := randi_range(0, 100)
-	if(probability_to_spawn <= 45):
+	if(probability_to_spawn <= 30):
 		var power_up = preload("res://scenes/game/powerups/powerups.tscn").instantiate()
 		var spawner = get_parent() 
 		
 		power_up.configure_power_up(self.global_position)
 	
 		spawner.call_deferred("add_child", power_up)
+
+
+func set_image_sprite(texture: Texture2D, key: int):
+	actual_image_brick = {
+		"key_image": key,
+		"image": texture
+	}
+
+
+func _set_texture_sprite(texture: Texture2D):
+	sprite_2d.texture = texture

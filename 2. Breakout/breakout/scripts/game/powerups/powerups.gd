@@ -31,7 +31,7 @@ func configure_power_up(initial_position: Vector2):
 	self.global_position = initial_position
 
 
-func _on_area_2d_body_entered(body):
+func _on_area_2d_entered(body):
 	if(body.is_in_group(GroupsSingleton.PaddleGroup)):
 		var paddle = body as Player
 		paddle.set_power_up_active(power_up)

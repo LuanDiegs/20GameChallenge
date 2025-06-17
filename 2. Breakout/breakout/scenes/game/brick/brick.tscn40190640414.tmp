@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://dfb40fvf7l5hw"]
 
 [ext_resource type="Script" uid="uid://dan3344dm1f8r" path="res://scripts/game/brick/brick.gd" id="1_lr1se"]
-[ext_resource type="Texture2D" uid="uid://dt8kv6s88b86e" path="res://assets/game/brick/brick_full_life_106x50.png" id="2_bafrr"]
+[ext_resource type="Texture2D" uid="uid://c42yovp5a80uf" path="res://assets/game/brick/brick_full_life.png" id="2_bafrr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0wfyh"]
-size = Vector2(128, 32)
+size = Vector2(135, 30)
 
 [node name="Brick" type="StaticBody2D"]
 collision_mask = 4
@@ -13,10 +13,6 @@ script = ExtResource("1_lr1se")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("2_bafrr")
-
-[node name="CollisionBrick" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_0wfyh")
-debug_color = Color(0.972699, 0.165938, 0, 0.42)
 
 [node name="Area" type="Area2D" parent="."]
 collision_mask = 4

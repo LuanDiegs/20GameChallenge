@@ -9,16 +9,26 @@ var velocity_block := 0
 var MAX_BALLS_IN_SCREEN := 5
 
 func _ready():
+	gravity_scale = 0
+	PowerupsMediator.set_powerup_double_ball.connect(duplicate_ball)
+	GameState.start_game.connect(set_ball_velocity)
+	GameState.end_game.connect(set_ball_velocity.bind(Vector2(0, 0)))
+	
+
+func set_ball_velocity(bal_velocity = null):
+	if linear_velocity != Vector2(0,0):
+		return
+		
 	var randomX = randf_range(1, -1)
 	velocity = Vector2(randomX, -1) * speed_ball
 	
-	gravity_scale = 0
 	linear_velocity = velocity
-	
-	PowerupsMediator.set_powerup_double_ball.connect(duplicate_ball)
 
 
 func _integrate_forces(_delta):
+	if(GameState.current_state == GameState.GAME_STATES.INITIAL):
+		return
+	
 	var ball_direction = linear_velocity.normalized() * speed_ball
 	
 	# This is for the ball don't get stuck in a straight horizontal line
@@ -46,3 +56,5 @@ func duplicate_ball():
 		
 	var duplicated_ball = self.duplicate()
 	get_parent().call_deferred("add_child", duplicated_ball)
+	
+	AlertMediatorSingleton.create_alert("Double balls!")

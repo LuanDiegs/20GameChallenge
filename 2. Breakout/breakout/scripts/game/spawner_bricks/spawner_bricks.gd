@@ -14,6 +14,14 @@ const BRICK := preload("res://scenes/game/brick/brick.tscn")
 # Private
 var _bricks_count := 0
 
+# The index is the number os colums of brick spawner
+const IMAGES_BRICK: Dictionary ={
+	6: preload("res://assets/game/brick/brick_full_life_106x50.png"),
+	5: preload("res://assets/game/brick/brick_full_life_130x50.png"),
+	4: preload("res://assets/game/brick/brick_full_life_165x50.png"),
+	3: preload("res://assets/game/brick/brick_full_life_223x50.png"),
+}
+
 
 func _ready() -> void:
 	create_level()
@@ -37,7 +45,7 @@ func create_level():
 	var initial_x := ((screen_size_x - width_all_bricks) / 2) + (BRICK_WIDTH / 2) + (BRICK_SPACING_X / 2)
 
 	# Fixed initial Y position
-	var initial_y := 80
+	var initial_y := 130
 
 	# Combined initial spawn position
 	var initial_position_spawn := Vector2(initial_x, initial_y)
@@ -65,7 +73,13 @@ func create_level():
 			brick.SIZE_HEIGHT = BRICK_HEIGHT
 			last_brick_x = brick.global_position.x
 			brick.connect("brick_died", _brick_died)
+			
+			# Set image
+			var key_image = BRICK_COLUMNS
+			brick.set_image_sprite(IMAGES_BRICK.get(key_image), key_image)
+			
 			call_deferred("add_child", brick)
+		
 			
 		line_offset_y += BRICK_HEIGHT + BRICK_SPACING_Y
 

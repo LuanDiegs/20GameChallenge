@@ -1,19 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://dnauxe1vnflik"]
+[gd_scene load_steps=10 format=3 uid="uid://dnauxe1vnflik"]
 
 [ext_resource type="PackedScene" uid="uid://b0qwkkgjo3hun" path="res://scenes/game/paddle/paddle.tscn" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://csll2ld85qfy6" path="res://scripts/game/game.gd" id="1_sugp2"]
 [ext_resource type="PackedScene" uid="uid://dwyj5kog07tsl" path="res://scenes/game/ball/ball.tscn" id="2_0wfyh"]
 [ext_resource type="Script" uid="uid://cww64l5vsi01c" path="res://scripts/game/spawner_bricks/spawner_bricks.gd" id="2_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://diewmxg7si4pr" path="res://scenes/game/ui/score/score.tscn" id="5_tbgi4"]
-[ext_resource type="Script" uid="uid://dro1g7ej6btye" path="res://scripts/game/ui/buttons/pause/pause_button.gd" id="5_tipki"]
 [ext_resource type="Script" uid="uid://crncd7boohkqn" path="res://scripts/game/ui/alerts/alerts.gd" id="6_tefeu"]
-[ext_resource type="Script" uid="uid://djk4red6l0n02" path="res://scripts/game/ui/paused_screen/pause_screen.gd" id="7_o6xl0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sugp2"]
 size = Vector2(1131, 221.5)
-
-[sub_resource type="FontVariation" id="FontVariation_tefeu"]
-spacing_top = 10
 
 [sub_resource type="FontVariation" id="FontVariation_tbgi4"]
 variation_embolden = 1.2
@@ -53,7 +48,7 @@ BRICK_SPACING_X = 10.0
 BRICK_SPACING_Y = 10.0
 
 [node name="Paddle" parent="." instance=ExtResource("1_o5qli")]
-position = Vector2(359, 1076)
+position = Vector2(359, 1158)
 collision_priority = 2.0
 
 [node name="Ball" parent="." instance=ExtResource("2_0wfyh")]
@@ -62,61 +57,7 @@ mass = 0.001
 
 [node name="UI" type="Node" parent="."]
 
-[node name="PauseScreen" type="PanelContainer" parent="UI"]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-script = ExtResource("7_o6xl0")
-metadata/_edit_use_anchors_ = true
-
-[node name="Vbox" type="VBoxContainer" parent="UI/PauseScreen"]
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="Title" type="Label" parent="UI/PauseScreen/Vbox"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_fonts/font = SubResource("FontVariation_tefeu")
-theme_override_font_sizes/font_size = 64
-text = "Oh no! You lost :("
-
-[node name="SubTitle" type="Label" parent="UI/PauseScreen/Vbox"]
-layout_mode = 2
-theme_override_fonts/font = SubResource("FontVariation_tefeu")
-theme_override_font_sizes/font_size = 42
-text = "Press \"R\" or click to restart"
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="GridUpper" type="VBoxContainer" parent="UI"]
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 0.0796875
-metadata/_edit_use_anchors_ = true
-
-[node name="Margin" type="MarginContainer" parent="UI/GridUpper"]
-layout_mode = 2
-theme_override_constants/margin_top = 10
-
-[node name="ButtonsVertical" type="VBoxContainer" parent="UI/GridUpper/Margin"]
-layout_mode = 2
-
-[node name="ButtonsHorizontal" type="HBoxContainer" parent="UI/GridUpper/Margin/ButtonsVertical"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="PauseButton" type="Button" parent="UI/GridUpper/Margin/ButtonsVertical/ButtonsHorizontal"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 26
-text = "PAUSE"
-script = ExtResource("5_tipki")
-
-[node name="ScoreContainer" parent="UI/GridUpper/Margin/ButtonsVertical" instance=ExtResource("5_tbgi4")]
-layout_mode = 2
+[node name="ScoreContainer" parent="UI" instance=ExtResource("5_tbgi4")]
 
 [node name="Alerts" type="VBoxContainer" parent="UI" node_paths=PackedStringArray("alert")]
 visible = false
@@ -138,8 +79,5 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme = SubResource("Theme_tefeu")
 text = "ALERTAAAAAA"
-
-[node name="AlertTimer" type="Timer" parent="UI/Alerts"]
-wait_time = 3.0
 
 [connection signal="body_entered" from="Limits/DeathArea" to="." method="_on_death_area_body_entered"]
