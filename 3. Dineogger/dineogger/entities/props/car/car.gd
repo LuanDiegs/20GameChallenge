@@ -1,0 +1,2 @@
+extends PropBaseClass
+class_name CarPropClass

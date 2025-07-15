@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bj3bmvuv1f7yk"]
+
+[ext_resource type="Script" uid="uid://clqao4vjkibuu" path="res://entities/spawner_entity/spawner_entity.gd" id="1_d7g6q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c6lro"]
+size = Vector2(32, 32)
+
+[node name="SpawnerEntity" type="Node2D"]
+script = ExtResource("1_d7g6q")
+
+[node name="SpawnerArea" type="Area2D" parent="."]
+
+[node name="SpawnArea" type="CollisionShape2D" parent="SpawnerArea"]
+shape = SubResource("RectangleShape2D_c6lro")
+
+[node name="TimerSpawner" type="Timer" parent="."]
