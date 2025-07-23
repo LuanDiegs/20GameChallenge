@@ -11,4 +11,4 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	entity.position = entity.position + Vector2(speed * delta * entity.movement_direction, 0)
+	entity.position += Vector2(speed * delta * entity.movement_direction, 0)

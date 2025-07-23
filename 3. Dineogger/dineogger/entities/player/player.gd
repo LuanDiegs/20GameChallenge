@@ -6,18 +6,22 @@ const SPEED = 5
 
 var target_position: Vector2
 var is_moving: bool = false
+var is_on_water_tile: bool = false
+var is_above_log: bool = false
 
 @onready var player_area: Area2D = $PlayerArea
-
+@export var collision_shape: CollisionShape2D
 
 func _ready() -> void:
 	target_position = position
 	player_area.body_entered.connect(_on_player_entered)
+	player_area.body_exited.connect(_on_player_exited)
+	
 
-
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	_move_player(delta)	
-	move_and_slide()
+	move_and_slide()	
+	_verify_collider(delta)
 
 
 func _move_player(delta: float):
@@ -44,10 +48,12 @@ func _move_player(delta: float):
 		if(is_valid):
 			target_position = possible_target
 			
-		is_moving = true		
+		is_moving = true
+		collision_shape.disabled = true	
 		_animate_jump()	
 		direction = Vector2.ZERO
-		
+	
+	_verify_collider(delta)	
 	position = lerp(position, target_position, SPEED * delta)
 
 
@@ -61,10 +67,34 @@ func _animate_jump():
 	
 	var tween2 = create_tween()
 	tween2.tween_callback(func(): is_moving = false).set_delay(0.2)
+	tween2.tween_callback(func(): collision_shape.disabled = false).set_delay(0.15)
 
 
 func _on_player_entered(body: Node2D) -> void:
 	if body is CarPropClass:	
 		get_tree().reload_current_scene()
+	elif body is TileMapLayer:
+		is_on_water_tile = true
+
+
+func _on_player_exited(body: Node2D) -> void:
+	if body is TileMapLayer:
+		is_on_water_tile = false
+
+
+func _verify_collider(delta: float):
+	if !is_on_water_tile:
+		return
+		
+	var bodies := player_area.get_overlapping_bodies()
+	var is_above_log := bodies.any(func(body): return body is LogPropClass)
+	var is_above_water := bodies.any(func(body): return body is TileMapLayer)
+	if is_above_water and is_above_log:
+		var log := bodies.filter(func(body): return body is LogPropClass)[0] as LogPropClass
 	
-	print(body)
+		target_position.x = log.global_position.x
+		return
+	
+	if is_above_water and !is_above_log:
+		get_tree().reload_current_scene()
+		return
